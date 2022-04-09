@@ -1,16 +1,13 @@
 {
   "files": {
-    "main.css": "/scrabble-club/static/css/main.073c9b0a.css",
-    "main.js": "/scrabble-club/static/js/main.1372b3bf.js",
-    "static/js/787.235e0c34.chunk.js": "/scrabble-club/static/js/787.235e0c34.chunk.js",
-    "static/media/logo.svg": "/scrabble-club/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/scrabble-club/static/css/main.f97424cb.css",
+    "main.js": "/scrabble-club/static/js/main.a985a50e.js",
     "index.html": "/scrabble-club/index.html",
-    "main.073c9b0a.css.map": "/scrabble-club/static/css/main.073c9b0a.css.map",
-    "main.1372b3bf.js.map": "/scrabble-club/static/js/main.1372b3bf.js.map",
-    "787.235e0c34.chunk.js.map": "/scrabble-club/static/js/787.235e0c34.chunk.js.map"
+    "main.f97424cb.css.map": "/scrabble-club/static/css/main.f97424cb.css.map",
+    "main.a985a50e.js.map": "/scrabble-club/static/js/main.a985a50e.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.1372b3bf.js"
+    "static/css/main.f97424cb.css",
+    "static/js/main.a985a50e.js"
   ]
 }
