@@ -1,4 +1,4 @@
-const ClubPlayerList = ({clubGames=[], clubName='', totals=[]}) => {
+const ClubPlayerList = ({clubName='', totals=[]}) => {
     const myTableSize = {
         height: '800px',
         width: 'fit-content'
@@ -16,7 +16,6 @@ const ClubPlayerList = ({clubGames=[], clubName='', totals=[]}) => {
                 <table className="trTable" border="1">
                     <thead>
                         <tr>
-                            <th>Rank</th>
                             <th>Player</th>
                             <th>Wins</th>
                             <th>Spread</th>
@@ -27,14 +26,13 @@ const ClubPlayerList = ({clubGames=[], clubName='', totals=[]}) => {
                     </thead>
                     <tbody>
                         {totals.map((total, index) => (
-                            <tr key={`total.${total.Name}`}>
-                                <td className="equispaced textright">{index+1}</td>
-                                <td>{total.Name}</td>
-                                <td className="textcenter">{total.Wins}</td>
-                                <td className="equispaced textright">{total.For - total.Against}</td>
-                                <td className="textcenter">{total.Losses}</td>
-                                <td className="equispaced textright">{total.For}</td>
-                                <td className="equispaced textright">{total.Against}</td>
+                            <tr key={`total.${index}`}>
+                                <td>{total.name}</td>
+                                <td className="textcenter">{total.wins}</td>
+                                <td className="equispaced textright">{Number(total.for - total.against).toLocaleString()}</td>
+                                <td className="textcenter">{total.losses}</td>
+                                <td className="equispaced textright">{Number(total.for).toLocaleString()}</td>
+                                <td className="equispaced textright">{Number(total.against).toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>

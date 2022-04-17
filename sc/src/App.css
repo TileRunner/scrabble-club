@@ -312,3 +312,12 @@
   left: 4px;
   top: 7px;
 }
+.equispaced {
+  font-family: monospace;
+}
+.textright {
+  text-align: right;
+}
+.textcenter {
+  text-align: center;
+}

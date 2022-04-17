@@ -30,17 +30,17 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGames}) => {
                     </thead>
                     <tbody>
                         {clubNights.map(clubNight => (
-                            <tr key={`night${clubNight.Id}`}>
-                                <td>{clubNight.Date}</td>
-                                <td>{clubNight.numPlayers}</td>
-                                <td>{clubNight.numPlayers > 0 && <>{clubNight.winner.Name}</>}</td>
-                                <td>{clubNight.numPlayers > 0 && <>{clubNight.winner.wins}</>}</td>
-                                <td>{clubNight.numPlayers > 0 && <>{clubNight.winner.spread}</>}</td>
+                            <tr key={`night${clubNight.id}`}>
+                                <td>{clubNight.date}</td>
+                                <td className="textcenter">{clubNight.numPlayers}</td>
+                                <td>{clubNight.numPlayers > 0 && <>{clubNight.winner.name}</>}</td>
+                                <td className="textcenter">{clubNight.numPlayers > 0 && <>{clubNight.winner.wins}</>}</td>
+                                <td className="textright">{clubNight.numPlayers > 0 && <>{clubNight.winner.spread}</>}&nbsp;</td>
                                 <td>
                                     <button className="trButton"
                                         onClick={function() {
-                                            getClubGames(clubNight.Id);
-                                            setSnat(`Selected ${clubNight.Date} club games.`);
+                                            getClubGames(clubNight.id);
+                                            setSnat(`Selected ${clubNight.date} club games.`);
                                             } }>
                                         CLUB GAMES
                                     </button>

@@ -6,60 +6,61 @@ export function getTotals(clubGames=[]) {
         let foundOpponent = false;
         for (let index2 = 0; index2 < totals.length; index2++) {
             const total = totals[index2];
-            if (total.Name === game.PlayerName) {
+            if (total.name === game.playerName) {
                 foundPlayer = true;
-                total.For = total.For + game.PlayerScore;
-                total.Against = total.Against + game.OpponentScore;
-                if (game.PlayerScore > game.OpponentScore) {
-                    total.Wins = total.Wins + 1;
+                total.for = total.for + game.playerScore;
+                total.against = total.against + game.opponentScore;
+                if (game.playerScore > game.opponentScore) {
+                    total.wins = total.wins + 1;
                 }
-                if (game.PlayerScore < game.OpponentScore) {
-                    total.Losses = total.Losses + 1;
+                if (game.playerScore < game.opponentScore) {
+                    total.losses = total.losses + 1;
                 }
-                if (game.PlayerScore === game.OpponentScore) {
-                    total.Wins = total.Wins + 0.5;
-                    total.Losses = total.Losses + 0.5;
+                if (game.playerScore === game.opponentScore) {
+                    total.wins = total.wins + 0.5;
+                    total.losses = total.losses + 0.5;
                 }
             }
-            if (total.Name === game.OpponentName) {
+            if (total.name === game.opponentName) {
                 foundOpponent = true;
-                total.Against = total.Against + game.PlayerScore;
-                total.For = total.For + game.OpponentScore;
-                if (game.PlayerScore < game.OpponentScore) {
-                    total.Wins = total.Wins + 1;
+                total.against = total.against + game.playerScore;
+                total.for = total.for + game.opponentScore;
+                if (game.playerScore < game.opponentScore) {
+                    total.wins = total.wins + 1;
                 }
-                if (game.PlayerScore > game.OpponentScore) {
-                    total.Losses = total.Losses + 1;
+                if (game.playerScore > game.opponentScore) {
+                    total.losses = total.losses + 1;
                 }
-                if (game.PlayerScore === game.OpponentScore) {
-                    total.Wins = total.Wins + 0.5;
-                    total.Losses = total.Losses + 0.5;
+                if (game.playerScore === game.opponentScore) {
+                    total.wins = total.wins + 0.5;
+                    total.losses = total.losses + 0.5;
                 }
             }
         }
         if (!foundPlayer) {
             let total = {
-                Name: game.PlayerName,
-                For: game.PlayerScore,
-                Against: game.OpponentScore,
-                Wins: game.PlayerScore > game.OpponentScore ? 1 : game.PlayerScore < game.OpponentScore ? 0 : 0.5,
-                Losses: game.PlayerScore < game.OpponentScore ? 1 : game.PlayerScore > game.OpponentScore ? 0 : 0.5,
+                name: game.playerName,
+                for: game.playerScore,
+                against: game.opponentScore,
+                wins: game.playerScore > game.opponentScore ? 1 : game.playerScore < game.opponentScore ? 0 : 0.5,
+                losses: game.playerScore < game.opponentScore ? 1 : game.playerScore > game.opponentScore ? 0 : 0.5,
             };
             totals.push(total);
         }
         if (!foundOpponent) {
             let total = {
-                Name: game.OpponentName,
-                For: game.OpponentScore,
-                Against: game.PlayerScore,
-                Wins: game.PlayerScore < game.OpponentScore ? 1 : game.PlayerScore > game.OpponentScore ? 0 : 0.5,
-                Losses: game.PlayerScore > game.OpponentScore ? 1 : game.PlayerScore < game.OpponentScore ? 0 : 0.5,
+                name: game.opponentName,
+                for: game.opponentScore,
+                against: game.playerScore,
+                wins: game.playerScore < game.opponentScore ? 1 : game.playerScore > game.opponentScore ? 0 : 0.5,
+                losses: game.playerScore > game.opponentScore ? 1 : game.playerScore < game.opponentScore ? 0 : 0.5,
             };
             totals.push(total);
         }
     }
     totals.sort(function(a,b) {
-        if (a.Name > b.Name) {return 1;} // by name
+        if (a.name > b.name) {return 1;} // by name
         return -1;});
+    console.log(JSON.stringify(totals));
     return totals;
 }

@@ -15,59 +15,59 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
             let foundOpponent = false;
             for (let index2 = 0; index2 < totals.length; index2++) {
                 const total = totals[index2];
-                if (total.Name === game.PlayerName) {
+                if (total.name === game.playerName) {
                     foundPlayer = true;
-                    total.For = total.For + game.PlayerScore;
-                    total.Against = total.Against + game.OpponentScore;
-                    if (game.PlayerScore > game.OpponentScore) {
-                        total.Wins = total.Wins + 1;
+                    total.for = total.for + game.playerScore;
+                    total.against = total.against + game.opponentScore;
+                    if (game.playerScore > game.opponentScore) {
+                        total.wins = total.wins + 1;
                     }
-                    if (game.PlayerScore < game.OpponentScore) {
-                        total.Losses = total.Losses + 1;
+                    if (game.playerScore < game.opponentScore) {
+                        total.losses = total.losses + 1;
                     }
-                    if (game.PlayerScore === game.OpponentScore) {
-                        total.Wins = total.Wins + 0.5;
-                        total.Losses = total.Losses + 0.5;
+                    if (game.playerScore === game.opponentScore) {
+                        total.wins = total.wins + 0.5;
+                        total.losses = total.losses + 0.5;
                     }
                 }
-                if (total.Name === game.OpponentName) {
+                if (total.name === game.opponentName) {
                     foundOpponent = true;
-                    total.Against = total.Against + game.PlayerScore;
-                    total.For = total.For + game.OpponentScore;
-                    if (game.PlayerScore < game.OpponentScore) {
-                        total.Wins = total.Wins + 1;
+                    total.against = total.against + game.playerScore;
+                    total.for = total.for + game.opponentScore;
+                    if (game.playerScore < game.opponentScore) {
+                        total.wins = total.wins + 1;
                     }
-                    if (game.PlayerScore > game.OpponentScore) {
-                        total.Losses = total.Losses + 1;
+                    if (game.playerScore > game.opponentScore) {
+                        total.losses = total.losses + 1;
                     }
-                    if (game.PlayerScore === game.OpponentScore) {
-                        total.Wins = total.Wins + 0.5;
-                        total.Losses = total.Losses + 0.5;
+                    if (game.playerScore === game.opponentScore) {
+                        total.wins = total.wins + 0.5;
+                        total.losses = total.losses + 0.5;
                     }
                 }
             }
             if (!foundPlayer) {
                 let total = {
-                    Name: game.PlayerName,
-                    For: game.PlayerScore,
-                    Against: game.OpponentScore,
-                    Wins: game.PlayerScore > game.OpponentScore ? 1 : game.PlayerScore < game.OpponentScore ? 0 : 0.5,
-                    Losses: game.PlayerScore < game.OpponentScore ? 1 : game.PlayerScore > game.OpponentScore ? 0 : 0.5,
+                    name: game.playerName,
+                    for: game.playerScore,
+                    against: game.opponentScore,
+                    wins: game.playerScore > game.opponentScore ? 1 : game.playerScore < game.opponentScore ? 0 : 0.5,
+                    losses: game.playerScore < game.opponentScore ? 1 : game.playerScore > game.opponentScore ? 0 : 0.5,
                 };
                 totals.push(total);
             }
             if (!foundOpponent) {
                 let total = {
-                    Name: game.OpponentName,
-                    For: game.OpponentScore,
-                    Against: game.PlayerScore,
-                    Wins: game.PlayerScore < game.OpponentScore ? 1 : game.PlayerScore > game.OpponentScore ? 0 : 0.5,
-                    Losses: game.PlayerScore > game.OpponentScore ? 1 : game.PlayerScore < game.OpponentScore ? 0 : 0.5,
+                    name: game.opponentName,
+                    for: game.opponentScore,
+                    against: game.playerScore,
+                    wins: game.playerScore < game.opponentScore ? 1 : game.playerScore > game.opponentScore ? 0 : 0.5,
+                    losses: game.playerScore > game.opponentScore ? 1 : game.playerScore < game.opponentScore ? 0 : 0.5,
                 };
                 totals.push(total);
             }
         }
-        totals.sort((a,b) => a.Wins > b.Wins ? -1 : a.Wins === b.Wins ? b.For - b.Against - a.For + a.Against : a.Losses - b.Losses);
+        totals.sort((a,b) => a.wins > b.wins ? -1 : a.wins === b.wins ? b.for - b.against - a.for + a.against : a.losses - b.losses);
         return totals;
     }
     return (<div className="trBackground">
@@ -89,27 +89,27 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
                     </thead>
                     <tbody>
                         {clubGames.map(game => (
-                            <tr key={`game${game.Id}`}>
-                                <td>{game.Round}</td>
+                            <tr key={`game${game.id}`}>
+                                <td>{game.round}</td>
                                 <td>
-                                    {game.PlayerName}
+                                    {game.playerName}
                                     <span style={{float: 'right', fontFamily: 'monospace'}}>&nbsp;
-                                        {game.PlayerScore > game.OpponentScore ? '(W)'
-                                        :game.PlayerScore < game.OpponentScore ? '(L)'
+                                        {game.playerScore > game.opponentScore ? '(W)'
+                                        :game.playerScore < game.opponentScore ? '(L)'
                                         : '(T)'}
                                     </span>
                                 </td>
                                 <td>
-                                    {game.OpponentName}
+                                    {game.opponentName}
                                     <span style={{float: 'right', fontFamily: 'monospace'}}>&nbsp;
-                                        {game.PlayerScore < game.OpponentScore ? '(W)'
-                                        :game.PlayerScore > game.OpponentScore ? '(L)'
+                                        {game.playerScore < game.opponentScore ? '(W)'
+                                        :game.playerScore > game.opponentScore ? '(L)'
                                         : '(T)'}
                                     </span>
                                 </td>
-                                <td className="equispaced textright">{game.PlayerScore}</td>
-                                <td className="equispaced textright">{game.OpponentScore}</td>
-                                <td className="equispaced textright">{Math.abs(game.PlayerScore - game.OpponentScore)}</td>
+                                <td className="equispaced textright">{game.playerScore}</td>
+                                <td className="equispaced textright">{game.opponentScore}</td>
+                                <td className="equispaced textright">{Math.abs(game.playerScore - game.opponentScore)}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -129,14 +129,14 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
                     </thead>
                     <tbody>
                         {getTotals().map((total, index) => (
-                            <tr key={`total.${total.Name}`}>
+                            <tr key={`total.${total.name}`}>
                                 <td className="equispaced textright">{index+1}</td>
-                                <td>{total.Name}</td>
-                                <td className="textcenter">{total.Wins}</td>
-                                <td className="equispaced textright">{total.For - total.Against}</td>
-                                <td className="textcenter">{total.Losses}</td>
-                                <td className="equispaced textright">{total.For}</td>
-                                <td className="equispaced textright">{total.Against}</td>
+                                <td>{total.name}</td>
+                                <td className="textcenter">{total.wins}</td>
+                                <td className="equispaced textright">{total.for - total.against}</td>
+                                <td className="textcenter">{total.losses}</td>
+                                <td className="equispaced textright">{Number(total.for).toLocaleString()}</td>
+                                <td className="equispaced textright">{Number(total.against).toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>
