@@ -1,6 +1,9 @@
 const ClubGameList = ({clubGames=[], clubDate=''}) => {
+    const myHeaderSize = {
+        height: '5vh'
+    };
     const myTableSize = {
-        height: '800px',
+        height: '90vh',
         width: 'fit-content'
     };
     const myTableScroll = {
@@ -70,8 +73,8 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
         totals.sort((a,b) => a.wins > b.wins ? -1 : a.wins === b.wins ? b.for - b.against - a.for + a.against : a.losses - b.losses);
         return totals;
     }
-    return (<div className="trBackground">
-        <div className="trSubtitle">
+    return (<div>
+        <div className="trSubtitle" style={myHeaderSize}>
             Club Games: {clubDate}
         </div>
         <div style={myTableSize}>
@@ -107,8 +110,8 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
                                         : '(T)'}
                                     </span>
                                 </td>
-                                <td className="equispaced textright">{game.playerScore}</td>
-                                <td className="equispaced textright">{game.opponentScore}</td>
+                                <td className="equispaced textright" data-grade={game.playerScore > 599 ? "great" : game.playerScore > 499 ? "good" : ""}>{game.playerScore}</td>
+                                <td className="equispaced textright" data-grade={game.opponentScore > 599 ? "great" : game.opponentScore > 499 ? "good" : ""}>{game.opponentScore}</td>
                                 <td className="equispaced textright">{Math.abs(game.playerScore - game.opponentScore)}</td>
                             </tr>
                         ))}
@@ -135,7 +138,7 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
                                 <td className="textcenter">{total.wins}</td>
                                 <td className="equispaced textright">{total.for - total.against}</td>
                                 <td className="textcenter">{total.losses}</td>
-                                <td className="equispaced textright">{Number(total.for).toLocaleString()}</td>
+                                <td className="equispaced textright" data-grade={total.for > 1499 ? "great" : total.for > 1399 ? "good" : ""}>{Number(total.for).toLocaleString()}</td>
                                 <td className="equispaced textright">{Number(total.against).toLocaleString()}</td>
                             </tr>
                         ))}

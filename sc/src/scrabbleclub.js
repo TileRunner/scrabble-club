@@ -37,25 +37,12 @@ const ScrabbleClub = () => {
         setShowing('ClubNights');
     };
 
-    const getClubGamesByClubId = (clubid) => {
+    const getClubGamesForClub = (clubid) => {
         if (clubGamesClubId !== clubid || true) {
             for (let index = 0; index < clubs.length; index++) {
                 let club = clubs[index];
                 if (club.id === clubid) {
                     let jdata = clubGames.filter(g => {return g.clubId === clubid;});
-                    // Add player names
-                    for (let index2 = 0; index2 < jdata.length; index2++) {
-                        let game = jdata[index2];
-                        for (let index3 = 0; index3 < players.length; index3++) {
-                            let player = players[index3];
-                            if (game.playerId === player.id) {
-                                game.playerName = player.name;
-                            }
-                            if (game.opponentId === player.id) {
-                                game.opponentName = player.name;
-                            }
-                        }
-                    }
                     let newTotals = getTotals(jdata);
                     setClubGamesClubName(club.name);
                     setClubGamesClubId(club.id);
@@ -72,7 +59,9 @@ const ScrabbleClub = () => {
                 const clubnight = clubNights[index];
                 if (clubnight.id === clubnightid) {
                     let jdata = clubGames.filter(g => {return g.clubNightId === clubnightid;});
-                    jdata.sort((a,b) => a.round - b.round);
+                    jdata.sort((a,b) => a.round - b.round
+                    || (b.playerScore > b.opponentScore ? b.playerScore : b.opponentScore)
+                    - (a.playerScore > a.opponentScore ? a.playerScore : a.opponentScore));
                     // Add player names
                     for (let index2 = 0; index2 < jdata.length; index2++) {
                         const game = jdata[index2];
@@ -103,9 +92,11 @@ const ScrabbleClub = () => {
             let clubnightlist = await getClubNights();
             let clubgamelist = await getClubGames();
 
-            // Put clubid on each game
+            // Put clubid and player names on each game
             clubgamelist.forEach(game => {
                 game.clubId = clubnightlist.filter(n => {return n.id === game.clubNightId;})[0].clubId;
+                game.playerName = playerlist.filter(p => {return p.id === game.playerId;})[0].name;
+                game.opponentName = playerlist.filter(p => {return p.id === game.opponentId;})[0].name;
             });
         
 
@@ -114,7 +105,14 @@ const ScrabbleClub = () => {
                 let clubnightgamelist = clubgamelist.filter(g => {return g.clubNightId === clubnight.id;});
                 clubnight.numGames = clubnightgamelist.length;
                 let clubnightplayers = [];
+                clubnight.highgame = 0;
                 clubnightgamelist.forEach(g => {
+                    if (g.playerScore > clubnight.highgame) {
+                        clubnight.highgame = g.playerScore;
+                    }
+                    if (g.opponentScore > clubnight.highgame) {
+                        clubnight.highgame = g.opponentScore;
+                    }
                     let foundPlayer = false; // found player
                     let foundOpponent = false; // found opponent
                     for (let i = 0; i < clubnightplayers.length; i++) {
@@ -131,18 +129,26 @@ const ScrabbleClub = () => {
                         }
                     }
                     if (!foundPlayer) {
-                        clubnightplayers.push({id: g.playerId, wins: g.playerScore === g.opponentScore ? 0.5 : g.playerScore > g.opponentScore ? 1 : 0, spread: g.playerScore - g.opponentScore});
+                        clubnightplayers.push({
+                            id: g.playerId,
+                            wins: g.playerScore === g.opponentScore ? 0.5 : g.playerScore > g.opponentScore ? 1 : 0,
+                            spread: g.playerScore - g.opponentScore,
+                            name: g.playerName
+                        });
                     }
                     if (!foundOpponent) {
-                        clubnightplayers.push({id: g.opponentId, wins: g.playerScore === g.opponentScore ? 0.5 : g.playerScore < g.opponentScore ? 1 : 0, spread: g.opponentScore - g.playerScore});
+                        clubnightplayers.push({
+                            id: g.opponentId,
+                            wins: g.playerScore === g.opponentScore ? 0.5 : g.playerScore < g.opponentScore ? 1 : 0,
+                            spread: g.opponentScore - g.playerScore,
+                            name: g.opponentName
+                        });
                     }
                 });
                 clubnight.numPlayers = clubnightplayers.length;
                 if (clubnightplayers.length > 0) {
                     clubnightplayers.sort((a,b) => a.wins > b.wins ? -1 : a.wins < b.wins ? 1 : b.spread - a.spread);
-                    let winner = clubnightplayers[0];
-                    winner.name = playerlist.filter(p => {return p.id === clubnightplayers[0].id;})[0].name;
-                    clubnight.winner = winner;
+                    clubnight.winner = clubnightplayers[0];
                 }
             });
             setClubs(clublist);
@@ -153,25 +159,21 @@ const ScrabbleClub = () => {
         }
         fetchData();
     },[]);
-    return (<div className="trBackground">
-        <div className="trTitle">
-            Scrabble Club Data - {showing}
-        </div>
+    return (
         <div className="container-fluid">
-                <div className="row">
-                    {showing !== 'Loading' && <div className="col-4">
-                        <ClubList clubs={clubs} getClubNights={getClubNightsForClub} getClubGames={getClubGamesByClubId}></ClubList>
-                    </div>}
-                    {(showing === 'ClubNights' || showing === 'ClubNightGames') && <div className="col-4">
-                        <ClubNightList clubNights={clubNightsForClub} clubName={clubNightsClubName} getClubGames={getClubGamesByClubNightId}></ClubNightList>
-                    </div>}
-                    {showing === 'ClubNightGames' && <div className="col-4">
-                        <ClubGameList clubGames={clubGamesForClubNight} clubDate={clubGamesClubNightDate}></ClubGameList>
-                    </div>}
-                    {showing === 'ClubPlayers' && <div className="col-4">
-                        <ClubPlayerList clubName={clubGamesClubName} totals={totals}></ClubPlayerList>
-                    </div>}
-                </div>
+            <div className="row">
+                {showing !== 'Loading' && <div className="col-4">
+                    <ClubList clubs={clubs} getClubNights={getClubNightsForClub} getClubGames={getClubGamesForClub}></ClubList>
+                </div>}
+                {(showing === 'ClubNights' || showing === 'ClubNightGames') && <div className="col-4">
+                    <ClubNightList clubNights={clubNightsForClub} clubName={clubNightsClubName} getClubGamesForClubNight={getClubGamesByClubNightId}></ClubNightList>
+                </div>}
+                {showing === 'ClubNightGames' && <div className="col-4">
+                    <ClubGameList clubGames={clubGamesForClubNight} clubDate={clubGamesClubNightDate}></ClubGameList>
+                </div>}
+                {showing === 'ClubPlayers' && <div className="col-4">
+                    <ClubPlayerList clubName={clubGamesClubName} totals={totals}></ClubPlayerList>
+                </div>}
             </div>
         </div>
     );

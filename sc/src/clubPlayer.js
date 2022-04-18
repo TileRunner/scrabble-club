@@ -1,14 +1,17 @@
 const ClubPlayerList = ({clubName='', totals=[]}) => {
+    const myHeaderSize = {
+        height: '5vh'
+    };
     const myTableSize = {
-        height: '800px',
+        height: '90vh',
         width: 'fit-content'
     };
     const myTableScroll = {
         height: '100%',
         overflowY: 'auto'
     };
-    return (<div className="trBackground">
-        <div className="trSubtitle">
+    return (<div>
+        <div className="trSubtitle" style={myHeaderSize}>
             Club Players: {clubName}
         </div>
         <div style={myTableSize}>

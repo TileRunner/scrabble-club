@@ -3,7 +3,7 @@ import ScrabbleClub from './scrabbleclub';
 
 function App() {
   return (
-    <div>
+    <div className='app'>
         <header>
           <ScrabbleClub/>
         </header>

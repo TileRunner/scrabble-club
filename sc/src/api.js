@@ -51,5 +51,15 @@ export async function getClubGames() {
         }
     });
     const jdata = await response.json();
+    // Make it so Player (as opposed to Opponent) is never the loser
+    jdata.forEach(g => {
+        if (g.playerScore < g.opponentScore) {
+            let old = {playerId: g.playerId, playerScore: g.playerScore, opponentId: g.opponentId, opponentScore: g.opponentScore};
+            g.playerId = old.opponentId;
+            g.playerScore = old.opponentScore;
+            g.opponentId = old.playerId;
+            g.opponentScore = old.playerScore;
+        }
+    });
     return jdata;
 };

@@ -1,13 +1,12 @@
-import { useState } from "react";
-
 const ClubList = ({clubs=[], getClubNights, getClubGames}) => {
-    const [snat, setSnat] = useState('No club selection made.');
+    const myHeaderSize = {
+        height: '5vh'
+    };
 
-    return (<div className="trBackground">
-        <div className="trSubtitle">
+    return (<div>
+        <div className="trSubtitle" style={myHeaderSize}>
             Club List
         </div>
-        {snat && <div className="trEmphasis">{snat}</div>}
         <table className="trTable" border="1">
             <thead>
                 <tr>
@@ -22,19 +21,12 @@ const ClubList = ({clubs=[], getClubNights, getClubGames}) => {
                         <td>{club.name}</td>
                         <td>{club.location}</td>
                         <td>
-                            <button className="trButton"
-                                onClick={function() {
-                                    getClubNights(club.id);
-                                    setSnat(`Selected ${club.name} club nights.`);
-                                    } }>
-                                CLUB NIGHTS
+                            <button className="trButton" onClick={function() {getClubNights(club.id);} }>
+                                NIGHTS
                             </button>
-                            <button className="trButton"
-                                onClick={function() {
-                                    getClubGames(club.id);
-                                    setSnat(`Selected ${club.name} club players.`);
-                                }}>
-                                CLUB PLAYERS
+                            &nbsp;
+                            <button className="trButton" onClick={function() {getClubGames(club.id);}}>
+                                PLAYERS
                             </button>
                         </td>
                     </tr>

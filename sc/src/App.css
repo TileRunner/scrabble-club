@@ -28,24 +28,19 @@
   --trcssButtonHoverFG: white;
   --trcssButtonFont: 'Courier New', Courier, monospace;
 }
-.trBackground {
+.app {
+  height: 100vh;
+  width: 100vw;
   background-color: var(--trcssPageBG);
-  margin-left: 5px;
-}
-.trTitle {
-  width: fit-content;
-  padding: 2px 5px;
-  background-color: var(--trcssTitleBG);
-  color: var(--trcssTitleFG);
-  font-size: xx-large;
-  font-family: var(--trcssTitleFont);
 }
 .trSubtitle {
+  border: 5px inset whitesmoke;
+  border-radius: 15px;
   margin-top: var(--trcssVerticalSpacer);
   width: fit-content;
   padding: 2px 5px;
-  background-color: var(--trcssSubtitleBG);
-  color: var(--trcssSubtitleFG);
+  background-color: burlywood;
+  color: black;
   font-size: x-large;
   font-family: var(--trcssSubtitleFont);
 }
@@ -89,6 +84,7 @@
   border-width: 3px;
   border-style: solid;
   border-color: var(--trcssTableBorder);
+  color: var(--trcssTdFG);
 }
 .trTable th {
   background-color: var(--trcssThBG);
@@ -99,8 +95,25 @@
   text-align: left;
 }
 .trTable td {
-  color: var(--trcssTdFG);
   font-family: var(--trcssTdFont);
+}
+.trTable tbody tr:hover {
+  background-color: cyan;
+  color: black;
+}
+[data-grade="great"] {
+  background-color: cyan;
+  color: black;
+}
+[data-grade="great"]::before {
+  content: "👏🏽";
+}
+[data-grade="good"] {
+  background-color: greenyellow;
+  color: black;
+}
+[data-grade="good"]::before {
+  content: "😎";
 }
 .trButton {
   float: none;
