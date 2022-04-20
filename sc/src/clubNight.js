@@ -1,3 +1,6 @@
+import { useState } from "react";
+import changeSortOrder from "./changeSortOrder";
+
 const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) => {
     const myHeaderSize = {
         height: '5vh'
@@ -10,6 +13,10 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) =
         height: '100%',
         overflowY: 'auto'
     };
+    const [so, setSo] = useState({by: "date", order: "desc"});
+    function handleColumnHeaderClick(columnName) {
+        changeSortOrder(columnName, so, setSo);
+    }
     return (<div>
         <div className="trSubtitle" style={myHeaderSize}>
             Club Nights: {clubName}
@@ -19,17 +26,39 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) =
                 <table className="trTable" border="1">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th onClick={() => {handleColumnHeaderClick("date");}}>
+                                Date
+                                {so.by === "date" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                            </th>
                             <th>#Players</th>
-                            <th>High game</th>
-                            <th>Winner</th>
+                            <th onClick={() => {handleColumnHeaderClick("highgame");}}>
+                                High game
+                                {so.by === "highgame" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                            </th>
+                            <th onClick={() => {handleColumnHeaderClick("winner");}}>
+                                Winner
+                                {so.by === "winner" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                            </th>
                             <th>Wins</th>
-                            <th>Spread</th>
+                            <th onClick={() => {handleColumnHeaderClick("spread");}}>
+                                Spread
+                                {so.by === "spread" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                            </th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {clubNights.map(clubNight => (
+                        {clubNights
+                        .sort((a,b) =>
+                        (so.by === "date" ? a.date : so.by === "winner" ? a.winner.name.toUpperCase() : so.by === "highgame" ? a.highgame : a.winner.spread)
+                        >
+                        (so.by === "date" ? b.date : so.by === "winner" ? b.winner.name.toUpperCase() : so.by === "highgame" ? b.highgame : b.winner.spread)
+                        ?
+                        so.order === "asc" ? 1 : -1
+                        :
+                        so.order === "asc" ? -1 : 1
+                        )
+                        .map(clubNight => (
                             <tr key={`night${clubNight.id}`}>
                                 <td>{clubNight.date}</td>
                                 <td className="textcenter">{clubNight.numPlayers}</td>

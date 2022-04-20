@@ -9,7 +9,6 @@ import { getClubs, getPlayers, getClubNights, getClubGames } from "./api";
 const ScrabbleClub = () => {
     const [showing, setShowing] = useState('Loading');
     const [clubs, setClubs] = useState([]);
-    const [players, setPlayers] = useState([]);
     const [clubNights, setClubNights] = useState([]);
     const [clubNightsForClub, setClubNightsForClub] = useState([]);
     const [clubGames, setClubGames] = useState([]);
@@ -62,19 +61,6 @@ const ScrabbleClub = () => {
                     jdata.sort((a,b) => a.round - b.round
                     || (b.playerScore > b.opponentScore ? b.playerScore : b.opponentScore)
                     - (a.playerScore > a.opponentScore ? a.playerScore : a.opponentScore));
-                    // Add player names
-                    for (let index2 = 0; index2 < jdata.length; index2++) {
-                        const game = jdata[index2];
-                        for (let index3 = 0; index3 < players.length; index3++) {
-                            const player = players[index3];
-                            if (game.playerId === player.id) {
-                                game.playerName = player.name;
-                            }
-                            if (game.opponentId === player.id) {
-                                game.opponentName = player.name;
-                            }
-                        }
-                    }
                     let newTotals = getTotals(jdata);
                     setClubGamesForClubNight(jdata);
                     setClubGamesClubNightDate(clubnight.date);
@@ -152,7 +138,6 @@ const ScrabbleClub = () => {
                 }
             });
             setClubs(clublist);
-            setPlayers(playerlist);
             setClubNights(clubnightlist.filter(n => {return n.numPlayers > 0;}));
             setClubGames(clubgamelist);
             setShowing('Clubs');

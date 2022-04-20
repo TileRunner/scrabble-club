@@ -334,3 +334,7 @@
 .textcenter {
   text-align: center;
 }
+.sortarrow {
+  color: yellow;
+  margin-left: 1px;
+}
