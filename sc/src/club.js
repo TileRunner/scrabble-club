@@ -1,14 +1,8 @@
-import { useState } from "react";
-import changeSortOrder from "./changeSortOrder";
 
 const ClubList = ({clubs=[], getClubNights, getClubGames}) => {
     const myHeaderSize = {
         height: '5vh'
     };
-    const [so, setSo] = useState({by: "name", order: "asc"});
-    function handleColumnHeaderClick(columnName) {
-        changeSortOrder(columnName, so, setSo);
-    }
 
     return (<div>
         <div className="trSubtitle" style={myHeaderSize}>
@@ -17,40 +11,39 @@ const ClubList = ({clubs=[], getClubNights, getClubGames}) => {
         <table className="trTable" border="1">
             <thead>
                 <tr>
-                    <th onClick={() => {handleColumnHeaderClick("name");}}>
-                        Club Name
-                        {so.by === "name" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
-                    </th>
-                    <th onClick={() => {handleColumnHeaderClick("location");}}>
-                        Location
-                        {so.by === "location" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
-                    </th>
+                    <th>Club Name</th>
+                    <th className="textright">Games</th>
+                    <th><div className="textright">Avg</div><div className="textright">Game</div><div className="textright">Score</div></th>
+                    <th><div className="textright">Avg</div><div className="textright">Winning</div><div className="textright">Score</div></th>
+                    <th><div className="textright">Avg</div><div className="textright">Tying</div><div className="textright">Score</div></th>
+                    <th><div className="textright">Avg</div><div className="textright">Losing</div><div className="textright">Score</div></th>
+                    <th><div className="textright">High</div><div className="textright">Game</div></th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {clubs
-                .sort((a,b) =>
-                (so.by === "name" ? a.name.toUpperCase() : a.location.toUpperCase())
-                >
-                (so.by === "name" ? b.name.toUpperCase() : b.location.toUpperCase())
-                ?
-                so.order === "asc" ? 1 : -1
-                :
-                so.order === "asc" ? -1 : 1
-                )
+                .sort((a,b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1)
                 .map(club => (
                     <tr key={`club${club.id}`}>
                         <td>{club.name}</td>
-                        <td>{club.location}</td>
+                        <td className="equispaced textright">{club.stat.games}</td>
+                        <td className="equispaced textright">{Math.round(club.stat.avgPoints)}</td>
+                        <td className="equispaced textright">{Math.round(club.stat.avgWinnerPoints)}</td>
+                        <td className="equispaced textright">{Math.round(club.stat.avgTiePoints)}</td>
+                        <td className="equispaced textright">{Math.round(club.stat.avgLoserPoints)}</td>
+                        <td className="equispaced textright" data-grade={club.stat.highgame > 599 ? "great" : club.stat.highgame > 499 ? "good" : ""}>{club.stat.highgame}</td>
                         <td>
-                            <button className="trButton" onClick={function() {getClubNights(club.id);} }>
-                                NIGHTS
-                            </button>
-                            &nbsp;
-                            <button className="trButton" onClick={function() {getClubGames(club.id);}}>
-                                PLAYERS
-                            </button>
+                            <div>
+                                <button className="trButton" onClick={function() {getClubNights(club.id);} }>
+                                    NIGHTS
+                                </button>
+                            </div>
+                            <div>
+                                <button className="trButton" onClick={function() {getClubGames(club.id);}}>
+                                    PLAYERS
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 ))}

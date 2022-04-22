@@ -137,6 +137,48 @@ const ScrabbleClub = () => {
                     clubnight.winner = clubnightplayers[0];
                 }
             });
+
+            // Calculate club average score
+            clublist.forEach(club => {
+                let stat = {games: 0, points: 0, winnerPoints: 0, loserPoints: 0, ties: 0, tiePoints: 0, highgame: 0};
+                clubgamelist.forEach(game => {
+                    if (game.clubId === club.id) {
+                        stat.games++;
+                        stat.points += (game.playerScore + game.opponentScore);
+                        if (game.playerScore > stat.highgame) {
+                            stat.highgame = game.playerScore;
+                        }
+                        if (game.opponentScore > stat.highgame) {
+                            stat.highgame = game.opponentScore;
+                        }
+                        if (game.playerScore > game.opponentScore) {
+                            stat.winnerPoints += game.playerScore;
+                            stat.loserPoints += game.opponentScore;
+                        } else if (game.playerScore === game.opponentScore) {
+                            stat.ties++;
+                            stat.tiePoints += game.playerScore;
+                        } else {
+                            stat.winnerPoints += game.opponentScore;
+                            stat.loserPoints += game.playerScore;
+                        }
+                    }
+                });
+                stat.avgPoints = 0;
+                stat.avgWinnerPoints = 0;
+                stat.avgLoserPoints = 0;
+                stat.avgTiePoints = 0;
+                if (stat.games > 0) {
+                    stat.avgPoints = stat.points / stat.games;
+                    if (stat.games > stat.ties) {
+                        stat.avgWinnerPoints = stat.winnerPoints / (stat.games - stat.ties);
+                        stat.avgLoserPoints = stat.loserPoints / (stat.games - stat.ties);
+                    }
+                    if (stat.ties > 0) {
+                        stat.avgTiePoints = stat.tiePoints / stat.ties;
+                    }
+                }
+                club.stat = stat;
+            })
             setClubs(clublist);
             setClubNights(clubnightlist.filter(n => {return n.numPlayers > 0;}));
             setClubGames(clubgamelist);
