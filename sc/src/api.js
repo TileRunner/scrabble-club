@@ -50,7 +50,7 @@ export async function getClubGames() {
             'Accept': 'application/json' // I want json response
         }
     });
-    const jdata = await response.json();
+    let jdata = await response.json();
     // Make it so Player (as opposed to Opponent) is never the loser
     jdata.forEach(g => {
         if (g.playerScore < g.opponentScore) {
@@ -61,5 +61,7 @@ export async function getClubGames() {
             g.opponentScore = old.playerScore;
         }
     });
+    // I accidentally posted a club night to the wrong club and there is no delete logic. I zeroed the scores.
+    jdata = jdata.filter(g => {return (g.playerScore !== 0) || (g.opponentScore !== 0);});
     return jdata;
 };
