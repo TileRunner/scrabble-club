@@ -110,8 +110,8 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
                                         : '(T)'}
                                     </span>
                                 </td>
-                                <td className="equispaced textright" data-grade={game.playerScore > 599 ? "great" : game.playerScore > 499 ? "good" : ""}>{game.playerScore}</td>
-                                <td className="equispaced textright" data-grade={game.opponentScore > 599 ? "great" : game.opponentScore > 499 ? "good" : ""}>{game.opponentScore}</td>
+                                <td className="equispaced textright" data-grade={game.playerScore > 699 ? "fantastic" : game.playerScore > 599 ? "great" : game.playerScore > 499 ? "good" : ""}>{game.playerScore}</td>
+                                <td className="equispaced textright" data-grade={game.opponentScore > 699 ? "fantastic" : game.opponentScore > 599 ? "great" : game.opponentScore > 499 ? "good" : ""}>{game.opponentScore}</td>
                                 <td className="equispaced textright">{Math.abs(game.playerScore - game.opponentScore)}</td>
                             </tr>
                         ))}
@@ -136,9 +136,9 @@ const ClubGameList = ({clubGames=[], clubDate=''}) => {
                                 <td className="equispaced textright">{index+1}</td>
                                 <td>{total.name}</td>
                                 <td className="textcenter">{total.wins}</td>
-                                <td className="equispaced textright">{total.for - total.against}</td>
+                                <td className="equispaced textright" data-grade={total.for - total.against > 599 ? "fantastic" : total.for - total.against > 499 ? "great" : total.for - total.against > 299 ? "good" : ""}>{total.for - total.against}</td>
                                 <td className="textcenter">{total.losses}</td>
-                                <td className="equispaced textright" data-grade={total.for > 1499 ? "great" : total.for > 1399 ? "good" : ""}>{Number(total.for).toLocaleString()}</td>
+                                <td className="equispaced textright" data-grade={total.for > 1599 ? "fantastic" : total.for > 1499 ? "great" : total.for > 1399 ? "good" : ""}>{Number(total.for).toLocaleString()}</td>
                                 <td className="equispaced textright">{Number(total.against).toLocaleString()}</td>
                             </tr>
                         ))}

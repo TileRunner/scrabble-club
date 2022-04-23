@@ -62,10 +62,10 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) =
                             <tr key={`night${clubNight.id}`}>
                                 <td>{clubNight.date}</td>
                                 <td className="textcenter">{clubNight.numPlayers}</td>
-                                <td className="textcenter" data-grade={clubNight.highgame > 599 ? "great" : clubNight.highgame > 499 ? "good" : ""}>{clubNight.highgame}</td>
+                                <td className="textcenter" data-grade={clubNight.highgame > 699 ? "fantastic" : clubNight.highgame > 599 ? "great" : clubNight.highgame > 499 ? "good" : ""}>{clubNight.highgame}</td>
                                 <td>{clubNight.winner.name}</td>
                                 <td className="textcenter">{clubNight.winner.wins}</td>
-                                <td className="textright" data-grade={clubNight.winner.spread > 499 ? "great" : clubNight.winner.spread > 299 ? "good" : ""}>{clubNight.winner.spread}&nbsp;</td>
+                                <td className="textright" data-grade={clubNight.winner.spread > 599 ? "fantastic" : clubNight.winner.spread > 499 ? "great" : clubNight.winner.spread > 299 ? "good" : ""}>{clubNight.winner.spread}&nbsp;</td>
                                 <td>
                                     <button className="trButton"
                                         onClick={function() {getClubGamesForClubNight(clubNight.id);} }>

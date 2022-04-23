@@ -101,6 +101,21 @@
   background-color: cyan;
   color: black;
 }
+@keyframes fantastic {
+  0% {border: 1px dashed #0000FF;}
+  50% {border: 1px dotted #00FF00;}
+}
+[data-grade="fantastic"] {
+  background-color: deeppink;
+  animation-name: fantastic;
+  animation-duration: 12s;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  color: black;
+}
+[data-grade="fantastic"]::before {
+  content: "🤩";
+}
 [data-grade="great"] {
   background-color: cyan;
   color: black;

@@ -20,6 +20,9 @@ export function getTotals(clubGames=[]) {
                     total.wins = total.wins + 0.5;
                     total.losses = total.losses + 0.5;
                 }
+                if (game.playerScore > total.highgame) {
+                    total.highgame = game.playerScore;
+                }
             }
             if (total.name === game.opponentName) {
                 foundOpponent = true;
@@ -35,6 +38,9 @@ export function getTotals(clubGames=[]) {
                     total.wins = total.wins + 0.5;
                     total.losses = total.losses + 0.5;
                 }
+                if (game.opponentScore > total.highgame) {
+                    total.highgame = game.opponentScore;
+                }
             }
         }
         if (!foundPlayer) {
@@ -44,6 +50,7 @@ export function getTotals(clubGames=[]) {
                 against: game.opponentScore,
                 wins: game.playerScore > game.opponentScore ? 1 : game.playerScore < game.opponentScore ? 0 : 0.5,
                 losses: game.playerScore < game.opponentScore ? 1 : game.playerScore > game.opponentScore ? 0 : 0.5,
+                highgame: game.playerScore
             };
             totals.push(total);
         }
@@ -54,10 +61,15 @@ export function getTotals(clubGames=[]) {
                 against: game.playerScore,
                 wins: game.playerScore < game.opponentScore ? 1 : game.playerScore > game.opponentScore ? 0 : 0.5,
                 losses: game.playerScore > game.opponentScore ? 1 : game.playerScore < game.opponentScore ? 0 : 0.5,
+                highgame: game.opponentScore
             };
             totals.push(total);
         }
     }
+    totals.forEach(total => {
+        total.avgFor = Math.round(total.for / (total.wins + total.losses));
+        total.avgAgainst = Math.round(total.against / (total.wins + total.losses));
+    })
     totals.sort(function(a,b) {
         if (a.name.toUpperCase() > b.name.toUpperCase()) {return 1;} // by name
         return -1;});

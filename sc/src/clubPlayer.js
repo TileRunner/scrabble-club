@@ -23,8 +23,9 @@ const ClubPlayerList = ({clubName='', totals=[]}) => {
                             <th>Wins</th>
                             <th>Spread</th>
                             <th>Losses</th>
-                            <th>For</th>
-                            <th>Against</th>
+                            <th>Avg For</th>
+                            <th>Avg Against</th>
+                            <th>High Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,8 +35,9 @@ const ClubPlayerList = ({clubName='', totals=[]}) => {
                                 <td className="textcenter">{total.wins}</td>
                                 <td className="equispaced textright">{Number(total.for - total.against).toLocaleString()}</td>
                                 <td className="textcenter">{total.losses}</td>
-                                <td className="equispaced textright">{Number(total.for).toLocaleString()}</td>
-                                <td className="equispaced textright">{Number(total.against).toLocaleString()}</td>
+                                <td data-grade={total.avgFor > 409 ? "great" : total.avgFor > 369 ? "good" : ""} className="equispaced textright">{total.avgFor.toLocaleString()}</td>
+                                <td className="equispaced textright">{total.avgAgainst.toLocaleString()}</td>
+                                <td data-grade={total.highgame > 599 ? "great" : total.highgame > 499 ? "good" : ""} className="equispaced textright">{total.highgame.toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>
