@@ -101,6 +101,9 @@
   background-color: cyan;
   color: black;
 }
+.trTable tfoot tr td {
+  border-top: 5px solid black;
+}
 @keyframes fantastic {
   0% {border: 1px dashed #0000FF;}
   50% {border: 1px dotted #00FF00;}

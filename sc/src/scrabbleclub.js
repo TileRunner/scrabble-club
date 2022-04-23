@@ -9,6 +9,7 @@ import { getClubs, getPlayers, getClubNights, getClubGames } from "./api";
 const ScrabbleClub = () => {
     const [showing, setShowing] = useState('Loading');
     const [clubs, setClubs] = useState([]);
+    const [allClubStats, setAllClubStats] = useState({});
     const [clubNights, setClubNights] = useState([]);
     const [clubNightsForClub, setClubNightsForClub] = useState([]);
     const [clubGames, setClubGames] = useState([]);
@@ -20,6 +21,7 @@ const ScrabbleClub = () => {
     const [clubGamesClubId, setClubGamesClubId] = useState(-1);
     const [clubGamesClubName, setClubGamesClubName] = useState('No club selected');
     const [totals, setTotals] = useState([]);
+    const [allPlayerTotals, setAllPlayerTotals] = useState([]);
     const getClubNightsForClub = (clubid) => {
         if (clubNightsClubId !== clubid) {
             for (let index = 0; index < clubs.length; index++) {
@@ -138,28 +140,47 @@ const ScrabbleClub = () => {
                 }
             });
 
-            // Calculate club average score
+            // Calculate club stats
+            let allstat = {games: 0, points: 0, winnerPoints: 0, loserPoints: 0, ties: 0, tiePoints: 0, highgame: 0};
+            allstat.avgPoints = 0;
+            allstat.avgWinnerPoints = 0;
+            allstat.avgLoserPoints = 0;
+            allstat.avgTiePoints = 0;
             clublist.forEach(club => {
                 let stat = {games: 0, points: 0, winnerPoints: 0, loserPoints: 0, ties: 0, tiePoints: 0, highgame: 0};
                 clubgamelist.forEach(game => {
                     if (game.clubId === club.id) {
                         stat.games++;
+                        allstat.games++;
                         stat.points += (game.playerScore + game.opponentScore);
+                        allstat.points += (game.playerScore + game.opponentScore);
                         if (game.playerScore > stat.highgame) {
                             stat.highgame = game.playerScore;
+                        }
+                        if (game.playerScore > allstat.highgame) {
+                            allstat.highgame = game.playerScore;
                         }
                         if (game.opponentScore > stat.highgame) {
                             stat.highgame = game.opponentScore;
                         }
+                        if (game.opponentScore > allstat.highgame) {
+                            allstat.highgame = game.opponentScore;
+                        }
                         if (game.playerScore > game.opponentScore) {
                             stat.winnerPoints += game.playerScore;
                             stat.loserPoints += game.opponentScore;
+                            allstat.winnerPoints += game.playerScore;
+                            allstat.loserPoints += game.opponentScore;
                         } else if (game.playerScore === game.opponentScore) {
                             stat.ties++;
                             stat.tiePoints += game.playerScore;
+                            allstat.ties++;
+                            allstat.tiePoints += game.playerScore;
                         } else {
                             stat.winnerPoints += game.opponentScore;
                             stat.loserPoints += game.playerScore;
+                            allstat.winnerPoints += game.opponentScore;
+                            allstat.loserPoints += game.playerScore;
                         }
                     }
                 });
@@ -178,19 +199,35 @@ const ScrabbleClub = () => {
                     }
                 }
                 club.stat = stat;
-            })
+            });
+            if (allstat.games > 0) {
+                allstat.avgPoints = allstat.points / allstat.games;
+                if (allstat.games > allstat.ties) {
+                    allstat.avgWinnerPoints = allstat.winnerPoints / (allstat.games - allstat.ties);
+                    allstat.avgLoserPoints = allstat.loserPoints / (allstat.games - allstat.ties);
+                }
+                if (allstat.ties > 0) {
+                    allstat.avgTiePoints = allstat.tiePoints / allstat.ties;
+                }
+            }
+            let playerTotals = getTotals(clubgamelist);
             setClubs(clublist);
+            setAllClubStats(allstat);
             setClubNights(clubnightlist.filter(n => {return n.numPlayers > 0;}));
             setClubGames(clubgamelist);
-            setShowing('Clubs');
+            setAllPlayerTotals(playerTotals);
+            setShowing('ClubsAndPlayers');
         }
         fetchData();
     },[]);
     return (
-        <div className="container-fluid">
+        <div className="container-fluid">{showing}
             <div className="row">
                 {showing !== 'Loading' && <div className="col-4">
-                    <ClubList clubs={clubs} getClubNights={getClubNightsForClub} getClubGames={getClubGamesForClub}></ClubList>
+                    <ClubList clubs={clubs} allClubStats={allClubStats} getClubNights={getClubNightsForClub} getClubGames={getClubGamesForClub} setShowing={setShowing}></ClubList>
+                </div>}
+                {showing === 'ClubsAndPlayers' && <div className="col-4">
+                    <ClubPlayerList clubName='All' totals={allPlayerTotals}></ClubPlayerList>
                 </div>}
                 {(showing === 'ClubNights' || showing === 'ClubNightGames') && <div className="col-4">
                     <ClubNightList clubNights={clubNightsForClub} clubName={clubNightsClubName} getClubGamesForClubNight={getClubGamesByClubNightId}></ClubNightList>

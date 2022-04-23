@@ -1,5 +1,5 @@
 
-const ClubList = ({clubs=[], getClubNights, getClubGames}) => {
+const ClubList = ({clubs=[], allClubStats, getClubNights, getClubGames, setShowing}) => {
     const myHeaderSize = {
         height: '5vh'
     };
@@ -48,6 +48,24 @@ const ClubList = ({clubs=[], getClubNights, getClubGames}) => {
                     </tr>
                 ))}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>All clubs</td>
+                    <td className="textright">{allClubStats.games}</td>
+                    <td className="equispaced textright">{Math.round(allClubStats.avgPoints)}</td>
+                    <td className="equispaced textright">{Math.round(allClubStats.avgWinnerPoints)}</td>
+                    <td className="equispaced textright">{Math.round(allClubStats.avgTiePoints)}</td>
+                    <td className="equispaced textright">{Math.round(allClubStats.avgLoserPoints)}</td>
+                    <td className="equispaced textright" data-grade={allClubStats.highgame > 599 ? "great" : allClubStats.highgame > 499 ? "good" : ""}>{allClubStats.highgame}</td>
+                    <td>
+                        <div>
+                            <button className="trButton" onClick={function() {setShowing('ClubsAndPlayers');}}>
+                                PLAYERS
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     );

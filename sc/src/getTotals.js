@@ -73,6 +73,5 @@ export function getTotals(clubGames=[]) {
     totals.sort(function(a,b) {
         if (a.name.toUpperCase() > b.name.toUpperCase()) {return 1;} // by name
         return -1;});
-    console.log(JSON.stringify(totals));
     return totals;
 }
