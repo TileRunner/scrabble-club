@@ -44,47 +44,13 @@
   font-size: x-large;
   font-family: var(--trcssSubtitleFont);
 }
-.trParagraph {
-  font-family: var(--trcssTextFont);
-  margin-top: var(--trcssVerticalSpacer);
-  color: var(--trcssTextFG);
-}
-.trEmphasis {
-  width: fit-content;
-  background-color: var(--trcssEmphasisBG);
-  color: var(--trcssEmphasisFG);
-}
-.trEmphasis::before {
-  content: '\2690 \0020'; /* Looks like a flag */
-}
-.trWarning {
-  width: fit-content;
-  background-color: var(--trcssWarningBG) !important;
-  color: var(--trcssWarningFG) !important;
-  font-family: Arial, Helvetica, sans-serif;
-}
-.trWarning::before {
-  margin-right: 2px;
-  content: '\26A0'; /* Looks like a ! inside a triangle */
-}
-.trDanger {
-  width: fit-content;
-  background-color: var(--trcssDangerBG) !important;
-  color: var(--trcssDangerFG) !important;
-  font-family: Arial, Helvetica, sans-serif;
-}
-.trDanger::before {
-  margin-right: 2px;
-  content: '\26D4'; /* Looks like a no entry sign */
-}
 .trTable {
-  padding: 5px;
-  background-color: var(--trcssTableBG);
+  background-color: black;/* var(--trcssTableBG);*/
   margin-top: var(--trcssVerticalSpacer);
   border-width: 3px;
   border-style: solid;
   border-color: var(--trcssTableBorder);
-  color: var(--trcssTdFG);
+  color: azure; /*var(--trcssTdFG);*/
 }
 .trTable th {
   background-color: var(--trcssThBG);
@@ -103,7 +69,7 @@
   color: black;
 }
 .trTable tfoot tr td {
-  border-top: 5px solid black;
+  border-top: 5px solid azure;
 }
 @keyframes fantastic {
   0% {border: 1px dashed #0000FF;}

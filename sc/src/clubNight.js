@@ -35,21 +35,21 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) =
                         <tr>
                             <th onClick={() => {handleColumnHeaderClick("date");}}>
                                 Date
-                                <span className="sortarrow">{so.by === "date" ? so.order === "asc" ? "↧" : "↥" : "="}</span>
+                                <span className="sortarrow">{so.by === "date" ? so.order === "asc" ? "↧" : "↥" : "■"}</span>
                             </th>
                             <th>Players</th>
                             <th onClick={() => {handleColumnHeaderClick("highgame");}}>
                                 Game
-                                <span className="sortarrow">{so.by === "highgame" ? so.order === "asc" ? "↧" : "↥" : "="}</span>
+                                <span className="sortarrow">{so.by === "highgame" ? so.order === "asc" ? "↧" : "↥" : "■"}</span>
                             </th>
                             <th onClick={() => {handleColumnHeaderClick("winner");}}>
                                 Name
-                                <span className="sortarrow">{so.by === "winner" ? so.order === "asc" ? "↧" : "↥" : "="}</span>
+                                <span className="sortarrow">{so.by === "winner" ? so.order === "asc" ? "↧" : "↥" : "■"}</span>
                             </th>
                             <th>Wins</th>
                             <th onClick={() => {handleColumnHeaderClick("spread");}}>
                                 Spread
-                                <span className="sortarrow">{so.by === "spread" ?so.order === "asc" ? "↧" : "↥" : "="}</span>
+                                <span className="sortarrow">{so.by === "spread" ?so.order === "asc" ? "↧" : "↥" : "■"}</span>
                             </th>
                             <th>Action</th>
                         </tr>

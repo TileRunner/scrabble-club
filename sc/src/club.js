@@ -8,7 +8,7 @@ const ClubList = ({clubs=[], allClubStats, getClubNights, getClubGames, setShowi
         <div className="trSubtitle" style={myHeaderSize}>
             Club List
         </div>
-        <table className="trTable" border="1">
+        <table className="trTable">
             <thead>
                 <tr>
                     <th>Club Name</th>
@@ -17,7 +17,7 @@ const ClubList = ({clubs=[], allClubStats, getClubNights, getClubGames, setShowi
                     <th><div className="textright">Avg</div><div className="textright">Winning</div><div className="textright">Score</div></th>
                     <th><div className="textright">Avg</div><div className="textright">Tying</div><div className="textright">Score</div></th>
                     <th><div className="textright">Avg</div><div className="textright">Losing</div><div className="textright">Score</div></th>
-                    <th><div className="textright">High</div><div className="textright">Game</div></th>
+                    <th><div className="textright">High</div><div className="textright">&nbsp;Game</div></th> {/* The space before Game helps the data columns not wrap after the emoji */}
                     <th>Action</th>
                 </tr>
             </thead>
