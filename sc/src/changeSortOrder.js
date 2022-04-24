@@ -6,6 +6,6 @@ export default function changeSortOrder(columnName, so, setSo) {
             setSo({ by: columnName, order: "asc" });
         }
     } else {
-        setSo({ by: columnName, order: "asc" });
+        setSo({ by: columnName, order: columnName === "winner" ? "asc" : "desc" });
     }
 }

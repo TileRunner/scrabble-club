@@ -26,23 +26,30 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) =
                 <table className="trTable" border="1">
                     <thead>
                         <tr>
+                            <th>Play</th>
+                            <th>Num</th>
+                            <th>High</th>
+                            <th colSpan={3}><div className="thwinner"><span>&lt;</span><span>Winner</span><span>&gt;</span></div></th>
+                            <th></th>
+                        </tr>
+                        <tr>
                             <th onClick={() => {handleColumnHeaderClick("date");}}>
                                 Date
-                                {so.by === "date" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                                <span className="sortarrow">{so.by === "date" ? so.order === "asc" ? "↧" : "↥" : "="}</span>
                             </th>
-                            <th>#Players</th>
+                            <th>Players</th>
                             <th onClick={() => {handleColumnHeaderClick("highgame");}}>
-                                High game
-                                {so.by === "highgame" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                                Game
+                                <span className="sortarrow">{so.by === "highgame" ? so.order === "asc" ? "↧" : "↥" : "="}</span>
                             </th>
                             <th onClick={() => {handleColumnHeaderClick("winner");}}>
-                                Winner
-                                {so.by === "winner" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                                Name
+                                <span className="sortarrow">{so.by === "winner" ? so.order === "asc" ? "↧" : "↥" : "="}</span>
                             </th>
                             <th>Wins</th>
                             <th onClick={() => {handleColumnHeaderClick("spread");}}>
                                 Spread
-                                {so.by === "spread" && <span className="sortarrow">{so.order === "asc" ? "↧" : "↥"}</span>}
+                                <span className="sortarrow">{so.by === "spread" ?so.order === "asc" ? "↧" : "↥" : "="}</span>
                             </th>
                             <th>Action</th>
                         </tr>
@@ -62,7 +69,7 @@ const ClubNightList = ({clubNights=[], clubName='', getClubGamesForClubNight}) =
                             <tr key={`night${clubNight.id}`}>
                                 <td>{clubNight.date}</td>
                                 <td className="textcenter">{clubNight.numPlayers}</td>
-                                <td className="textcenter" data-grade={clubNight.highgame > 699 ? "fantastic" : clubNight.highgame > 599 ? "great" : clubNight.highgame > 499 ? "good" : ""}>{clubNight.highgame}</td>
+                                <td className="textright" data-grade={clubNight.highgame > 699 ? "fantastic" : clubNight.highgame > 599 ? "great" : clubNight.highgame > 499 ? "good" : ""}>{clubNight.highgame}</td>
                                 <td>{clubNight.winner.name}</td>
                                 <td className="textcenter">{clubNight.winner.wins}</td>
                                 <td className="textright" data-grade={clubNight.winner.spread > 599 ? "fantastic" : clubNight.winner.spread > 499 ? "great" : clubNight.winner.spread > 299 ? "good" : ""}>{clubNight.winner.spread}&nbsp;</td>

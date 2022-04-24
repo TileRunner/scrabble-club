@@ -96,6 +96,7 @@
 }
 .trTable td {
   font-family: var(--trcssTdFont);
+  padding-left: 3px;
 }
 .trTable tbody tr:hover {
   background-color: cyan;
@@ -167,4 +168,12 @@
 .sortarrow {
   color: yellow;
   margin-left: 1px;
+}
+.sortarrow:hover {
+  cursor: pointer;
+}
+.thwinner {
+  background-color: #0000FF;
+  display: flex;
+  justify-content: space-between;
 }

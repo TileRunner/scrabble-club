@@ -24,16 +24,23 @@ const ScrabbleClub = () => {
     const [allPlayerTotals, setAllPlayerTotals] = useState([]);
     const getClubNightsForClub = (clubid) => {
         if (clubNightsClubId !== clubid) {
-            for (let index = 0; index < clubs.length; index++) {
-                const club = clubs[index];
-                if (club.id === clubid) {
-                    let jdata = clubNights.filter(n => {return n.clubId === clubid;});
-                    jdata.sort((a,b) => a.date > b.date ? -1 : 1);
-                    setClubNightsForClub(jdata);
-                    setClubNightsClubName(club.name);
-                    setClubNightsClubId(club.id);
+            if (clubid === 0) {
+                let jdata = clubNights;
+                jdata.sort((a,b) => a.date > b.date ? -1 : 1);
+                setClubNightsForClub(jdata);
+                setClubNightsClubName("All");
+            } else {
+                for (let index = 0; index < clubs.length; index++) {
+                    const club = clubs[index];
+                    if (club.id === clubid) {
+                        let jdata = clubNights.filter(n => {return n.clubId === clubid;});
+                        jdata.sort((a,b) => a.date > b.date ? -1 : 1);
+                        setClubNightsForClub(jdata);
+                        setClubNightsClubName(club.name);
+                    }
                 }
-            }   
+            }
+            setClubNightsClubId(clubid);
         }
         setShowing('ClubNights');
     };
@@ -221,7 +228,7 @@ const ScrabbleClub = () => {
         fetchData();
     },[]);
     return (
-        <div className="container-fluid">{showing}
+        <div className="container-fluid">
             <div className="row">
                 {showing !== 'Loading' && <div className="col-4">
                     <ClubList clubs={clubs} allClubStats={allClubStats} getClubNights={getClubNightsForClub} getClubGames={getClubGamesForClub} setShowing={setShowing}></ClubList>

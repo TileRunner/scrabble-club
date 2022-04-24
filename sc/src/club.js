@@ -59,6 +59,11 @@ const ClubList = ({clubs=[], allClubStats, getClubNights, getClubGames, setShowi
                     <td className="equispaced textright" data-grade={allClubStats.highgame > 599 ? "great" : allClubStats.highgame > 499 ? "good" : ""}>{allClubStats.highgame}</td>
                     <td>
                         <div>
+                            <button className="trButton" onClick={function() {getClubNights(0);} }>
+                                NIGHTS
+                            </button>
+                        </div>
+                        <div>
                             <button className="trButton" onClick={function() {setShowing('ClubsAndPlayers');}}>
                                 PLAYERS
                             </button>
