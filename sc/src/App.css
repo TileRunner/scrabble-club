@@ -65,7 +65,7 @@
   padding-left: 3px;
 }
 .trTable tbody tr:hover {
-  background-color: cyan;
+  background-color: azure;
   color: black;
 }
 .trTable tfoot tr td {

@@ -17,7 +17,7 @@ const ClubList = ({clubs=[], allClubStats, getClubNights, getClubGames, setShowi
                     <th><div className="textright">Avg</div><div className="textright">Winning</div><div className="textright">Score</div></th>
                     <th><div className="textright">Avg</div><div className="textright">Tying</div><div className="textright">Score</div></th>
                     <th><div className="textright">Avg</div><div className="textright">Losing</div><div className="textright">Score</div></th>
-                    <th><div className="textright">High</div><div className="textright">&nbsp;Game</div></th> {/* The space before Game helps the data columns not wrap after the emoji */}
+                    <th><div className="textright">High</div><div className="textright">Game</div></th>
                     <th>Action</th>
                 </tr>
             </thead>

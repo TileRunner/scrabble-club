@@ -3,11 +3,13 @@ import ClubList from "./club";
 import ClubNightList from "./clubNight";
 import ClubGameList from "./clubGame";
 import ClubPlayerList from "./clubPlayer";
+import HeadToHeadList from "./h2h";
 import { getTotals } from "./getTotals";
 import { getClubs, getPlayers, getClubNights, getClubGames } from "./api";
 
 const ScrabbleClub = () => {
     const [showing, setShowing] = useState('Loading');
+    const [showingh2h, setShowingh2h] = useState(false);
     const [clubs, setClubs] = useState([]);
     const [allClubStats, setAllClubStats] = useState({});
     const [clubNights, setClubNights] = useState([]);
@@ -22,6 +24,7 @@ const ScrabbleClub = () => {
     const [clubGamesClubName, setClubGamesClubName] = useState('No club selected');
     const [totals, setTotals] = useState([]);
     const [allPlayerTotals, setAllPlayerTotals] = useState([]);
+    const [h2hItem, setH2hItem] = useState({playerName:'', h2h: []});
     const getClubNightsForClub = (clubid) => {
         if (clubNightsClubId !== clubid) {
             if (clubid === 0) {
@@ -234,16 +237,19 @@ const ScrabbleClub = () => {
                     <ClubList clubs={clubs} allClubStats={allClubStats} getClubNights={getClubNightsForClub} getClubGames={getClubGamesForClub} setShowing={setShowing}></ClubList>
                 </div>}
                 {showing === 'ClubsAndPlayers' && <div className="col-4">
-                    <ClubPlayerList clubName='All' totals={allPlayerTotals}></ClubPlayerList>
+                    <ClubPlayerList clubName='All' totals={allPlayerTotals} setH2hItem={setH2hItem} setShowingh2h={setShowingh2h}></ClubPlayerList>
+                </div>}
+                {showing === 'ClubPlayers' && <div className="col-4">
+                    <ClubPlayerList clubName={clubGamesClubName} totals={totals} setH2hItem={setH2hItem} setShowingh2h={setShowingh2h}></ClubPlayerList>
+                </div>}
+                {showingh2h && (showing === 'ClubsAndPlayers' || showing === 'ClubPlayers') && <div className="col-4">
+                    <HeadToHeadList playerName={h2hItem.playerName} h2h={h2hItem.h2h}></HeadToHeadList>
                 </div>}
                 {(showing === 'ClubNights' || showing === 'ClubNightGames') && <div className="col-4">
                     <ClubNightList clubNights={clubNightsForClub} clubName={clubNightsClubName} getClubGamesForClubNight={getClubGamesByClubNightId}></ClubNightList>
                 </div>}
                 {showing === 'ClubNightGames' && <div className="col-4">
                     <ClubGameList clubGames={clubGamesForClubNight} clubDate={clubGamesClubNightDate}></ClubGameList>
-                </div>}
-                {showing === 'ClubPlayers' && <div className="col-4">
-                    <ClubPlayerList clubName={clubGamesClubName} totals={totals}></ClubPlayerList>
                 </div>}
             </div>
         </div>

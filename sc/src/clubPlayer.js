@@ -1,4 +1,4 @@
-const ClubPlayerList = ({clubName='', totals=[]}) => {
+const ClubPlayerList = ({clubName='', totals=[], setH2hItem, setShowingh2h}) => {
     const myHeaderSize = {
         height: '5vh'
     };
@@ -23,9 +23,10 @@ const ClubPlayerList = ({clubName='', totals=[]}) => {
                             <th>Wins</th>
                             <th>Spread</th>
                             <th>Losses</th>
-                            <th>Avg For</th>
-                            <th>Avg Against</th>
-                            <th>High Score</th>
+                            <th><div className="textright">Avg For</div></th>
+                            <th><div className="textright">Avg Against</div></th>
+                            <th><div className="textright">High Game</div></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,6 +39,18 @@ const ClubPlayerList = ({clubName='', totals=[]}) => {
                                 <td data-grade={total.avgFor > 409 ? "great" : total.avgFor > 369 ? "good" : ""} className="equispaced textright">{total.avgFor.toLocaleString()}</td>
                                 <td className="equispaced textright">{total.avgAgainst.toLocaleString()}</td>
                                 <td data-grade={total.highgame > 599 ? "great" : total.highgame > 499 ? "good" : ""} className="equispaced textright">{total.highgame.toLocaleString()}</td>
+                                <td>
+                                    <div>
+                                        <button className="trButton"
+                                        onClick={() => {
+                                            setH2hItem({playerName: total.name, h2h: total.h2h});
+                                            setShowingh2h(true);
+                                        }}
+                                        >
+                                            H2H
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
