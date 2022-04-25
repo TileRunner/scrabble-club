@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/scrabble-club/static/css/main.29f496b2.css",
-    "main.js": "/scrabble-club/static/js/main.ab8d857c.js",
+    "main.css": "/scrabble-club/static/css/main.f0df5337.css",
+    "main.js": "/scrabble-club/static/js/main.2c120475.js",
     "index.html": "/scrabble-club/index.html",
-    "main.29f496b2.css.map": "/scrabble-club/static/css/main.29f496b2.css.map",
-    "main.ab8d857c.js.map": "/scrabble-club/static/js/main.ab8d857c.js.map"
+    "main.f0df5337.css.map": "/scrabble-club/static/css/main.f0df5337.css.map",
+    "main.2c120475.js.map": "/scrabble-club/static/js/main.2c120475.js.map"
   },
   "entrypoints": [
-    "static/css/main.29f496b2.css",
-    "static/js/main.ab8d857c.js"
+    "static/css/main.f0df5337.css",
+    "static/js/main.2c120475.js"
   ]
 }
